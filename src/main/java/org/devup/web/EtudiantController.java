@@ -26,13 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 @Controller
-@RequestMapping(value="/Etudiants")
+@RequestMapping(value="/")
 public class EtudiantController {
 	@Autowired
 	private EtudiantRepository etudiantRepository;
 	@Value ("${dir.images}")
 	private String imageDir;
-	@RequestMapping(value ="/Index")
+	@RequestMapping(value ="/user/Index")
 	public String  Index(Model model,
 			@RequestParam(name="page", defaultValue="0") int p,
 			@RequestParam(name="motCle",defaultValue="")String mc){
@@ -46,12 +46,12 @@ public class EtudiantController {
 		model.addAttribute("motCle",mc);
 		return "etudiants";
 	}
-	@RequestMapping(value="/form",method=RequestMethod.GET)
+	@RequestMapping(value="/admin/form",method=RequestMethod.GET)
 	public String formEtudiant(Model model){
 		model.addAttribute("etudiant",new Etudiant());
 		return "formEtudiant";
 	}
-	@RequestMapping(value="/saveEtudiant",method=RequestMethod.POST)
+	@RequestMapping(value="/admin/saveEtudiant",method=RequestMethod.POST)
 	public String save(@Valid Etudiant et,
 			BindingResult bindingResult,
 			@RequestParam(name="picture") MultipartFile file
@@ -60,44 +60,43 @@ public class EtudiantController {
 			return "formEtudiant";
 		}
 		
-		System.out.println("---------Nom photo-------------------");
-		System.out.println(file.getOriginalFilename());
+		/*System.out.println("---------Nom photo-------------------");
+		System.out.println(file.getOriginalFilename()); */
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
 		}
 		etudiantRepository.save(et);
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
-			System.out.println("----------------------------");
+			/*System.out.println("----------------------------");
 			System.out.println(et.getPhoto());
-			//file.transferTo(new File(imageDir+file.getOriginalFilename()));
+			file.transferTo(new File(imageDir+file.getOriginalFilename())); */
 			file.transferTo(new File(imageDir+et.getId()));
-		
-			
+				
 		}
 		
-		return "redirect:Index";
+		return "redirect:/user/Index";
 	}
-	@RequestMapping(value="/getPhoto",produces=MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value="/user/getPhoto",produces=MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody 	//envoie des donnée dans le corps de la req
 	public byte[] getPhoto(Long id) throws Exception  {
 		File f=new File(imageDir+id);
 		return IOUtils.toByteArray(new FileInputStream(f));
 	}
-	@RequestMapping(value="/supprimer")
+	@RequestMapping(value="/admin/supprimer")
 	public String supprimer(Long id){
 		etudiantRepository.delete(id);
 		System.out.println("-----------action supp--------------");
-		return "redirect:Index";
+		return "redirect:/user/Index";
 	}
-	@RequestMapping(value="/editer")
+	@RequestMapping(value="/admin/editer")
 	public String editer(Long id,Model model){
 		Etudiant et=etudiantRepository.getOne(id);
 		model.addAttribute("etudiant",et);
 		
 		return "EditEtudiant";
 	}
-	@RequestMapping(value="/UpdateEtudiant",method=RequestMethod.POST)
+	@RequestMapping(value="/admin/UpdateEtudiant",method=RequestMethod.POST)
 	public String update(@Valid Etudiant et,
 			BindingResult bindingResult,
 			@RequestParam(name="picture") MultipartFile file
@@ -122,6 +121,18 @@ public class EtudiantController {
 			
 		}
 		
-		return "redirect:Index";
+		return "redirect:/user/Index";
+	}
+	@RequestMapping(value="/")
+	public String home(){
+		return "redirect:/user/Index";
+	}
+	@RequestMapping(value="/403")
+	public String accessdenied(){
+		return "403";
+	}
+	@RequestMapping(value="/login")
+	public String login(){
+		return "login";
 	}
 }

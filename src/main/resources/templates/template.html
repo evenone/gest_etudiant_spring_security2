@@ -14,9 +14,11 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a th:href="@{Index}">Home </a></li>
-				<li> <a href="#" th:href="@{Index}">Etudiants</a></li>
+				<li class="active"><a th:href="@{/user/Index}">Home </a></li>
+				<li> <a href="#" th:href="@{/user/Index}">Etudiants</a></li>
 				<li><a href="#" th:href="@{task}">Log </a></li>
+				<li><a href="#" th:href="@{/login?logout}" th:inline="text">
+                     [[${#httpServletRequest.remoteUser}]] </a></li>
 			</ul>
 		</div>
 	</div>

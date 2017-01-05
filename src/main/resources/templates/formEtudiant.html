@@ -16,7 +16,7 @@ layout:decorator="template">
 	<div class="panel panel-default">
 		<div class="panel-heading">Saisie Etudiant</div>
 		<div class="panel-body">
-		  <form th:action="@{saveEtudiant}" method="post" th:object="${etudiant}" enctype="multipart/form-data">
+		  <form th:action="@{/admin/saveEtudiant}" method="post" th:object="${etudiant}" enctype="multipart/form-data">
 		  <div class="form-group">
 		  	<label class="control-label"> Nom :</label>
 		  	<input type="text" th:field ="*{nom}" class ="form-control"/>

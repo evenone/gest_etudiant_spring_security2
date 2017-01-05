@@ -13,10 +13,10 @@ layout:decorator="template">
 <body layout:fragment="content">
 
 <div class="container spacer" >
-<a th:href="@{form}">Saisir les données etudiant</a>
+<a th:href="@{/admin/form}">Saisir les données etudiant</a>
 </div>
 <div class="container spacer">
-	<form th:action="@{Index}" method="get">
+	<form th:action="@{/user/Index}" method="get">
 		<div class="form-group">
 			<label>mot clé :</label>
 			<input type="text" name ="motCle" th:value ="${motCle}"/>
@@ -40,8 +40,8 @@ layout:decorator="template">
 		<td>
 			<img class="img-circle" th:src="@{getPhoto(id=${e.id})}" width="100" height="100"/>
 		</td>
-		<td><a onclick="return confirm('Etes vous sur de vouloir supprimer:')" th:href="@{supprimer(id=${e.id})}">Supprimer</a></td>	
-		<td><a  th:href="@{editer(id=${e.id})}">Editer</a></td>	
+		<td><a onclick="return confirm('Etes vous sur de vouloir supprimer:')" th:href="@{/admin/supprimer(id=${e.id})}">Supprimer</a></td>	
+		<td><a  th:href="@{/admin/editer(id=${e.id})}">Editer</a></td>	
 		</tr>
 	</tbody>
 	</table>
@@ -49,7 +49,7 @@ layout:decorator="template">
 <div class ="container">
 	<ul class="nav nav-pills">
 		<li th:each ="p:${pages}" th:class="${p==pageCourante}?active:''"> 
-		<a th:text="${p}" th:href="@{Index(page=${p},motCle=${motCle})}"></a>
+		<a th:text="${p}" th:href="@{/user/Index(page=${p},motCle=${motCle})}"></a>
 		</li>
 	</ul>
 	

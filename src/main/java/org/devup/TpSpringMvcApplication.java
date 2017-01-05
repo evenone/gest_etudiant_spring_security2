@@ -28,9 +28,9 @@ public class TpSpringMvcApplication {
 		System.out.println("--------------------------------------------------------------------------------- ");
 		//Page<Etudiant> etds=etudiantRepository.findAll(new PageRequest(0,5));
 		Page<Etudiant> etds=etudiantRepository.chercherEtudiants("%B%",new PageRequest(0,5));
-		etds.forEach(e->System.out.println(e.getNom()));
+		etds.forEach(e->System.out.println(e.getNom())); */
 		System.out.println("fin programme");
-		*/
+		
 		
 	}
 }
