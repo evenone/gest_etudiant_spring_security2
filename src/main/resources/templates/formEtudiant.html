@@ -11,11 +11,11 @@ layout:decorator="template">
 <title>Formulaire de Saisie  des etudiants </title>
 </head>
 
-<body layout:fragment="content">
-<div class=" col-md-6 col-xs-12 col-md-offset-3  spacer">
+<body layout:fragment="content" >
+<div class=" col-md-6 col-xs-12 col-md-offset-3  formulaire" >
 	<div class="panel panel-default">
-		<div class="panel-heading">Saisie Etudiant</div>
-		<div class="panel-body">
+		<div class="panel-heading text-center">Saisie Etudiant</div>
+		<div class="panel-body formulaire" >
 		  <form th:action="@{/admin/saveEtudiant}" method="post" th:object="${etudiant}" enctype="multipart/form-data">
 		  <div class="form-group">
 		  	<label class="control-label"> Nom :</label>
@@ -38,12 +38,13 @@ layout:decorator="template">
 		  	<span class="text-danger" th:errors="*{photo}"></span>
 		  </div>
 		  <div>
-		  <button type="submit" class ="btn btn-primary">Save</button>
+		  <button type="submit" class ="btn btn-primary pull-right">Save</button>
 		  </div>
 		  </form>
 		</div>
 	</div>
 	
 </div>
+
 </body>
 </html>

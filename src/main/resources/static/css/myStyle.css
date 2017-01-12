@@ -1,3 +1,36 @@
 .spacer {
-	margin-top :60px;
+	margin-top :8px;
 }
+.spacerbar {
+	margin-top :8px;
+}
+.red {
+	color:red;
+}
+ .inline-form input {
+            display: inline-block;
+            width: 100px;
+ }
+body { 
+	background-color:#DDDDDD; 
+}
+.formulaire {
+	background-color:#CCCCCC;
+}
+
+
+}
+a:focus { outline:0; } 
+.pagination-centered {
+	text-align: center;
+}
+
+.disabled {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
+.pointer-disabled {
+	pointer-events: none;
+}
+

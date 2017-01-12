@@ -8,17 +8,15 @@ layout:decorator="template">
  th:href="@{/css/bootstrap.min.css}" />
  <link rel="stylesheet"  type="text/css" href ="../static/css/myStyle.css" 
   th:href="@{/css/myStyle.css}" />
+
 <title>Gestion des etudiants </title>
 </head>
 <body layout:fragment="content">
 
-<div class="container spacer" >
-<a th:href="@{/admin/form}">Saisir les données etudiant</a>
-</div>
 <div class="container spacer">
 	<form th:action="@{/user/Index}" method="get">
 		<div class="form-group">
-			<label>mot clé :</label>
+			<label>Mot clé :</label>
 			<input type="text" name ="motCle" th:value ="${motCle}"/>
 			<button type="submit">Chercher</button>
 		</div>
@@ -28,7 +26,7 @@ layout:decorator="template">
 	<table class="table table-striped">
 	<thead>
 		<tr>
-		<th>Id	</th><th>Nom	</th><th>Date naissance	</th><th>Email	</th><th>Photo	</th>
+		<th>Id	</th><th>Nom	</th><th>Date naissance	</th><th>Email	</th><th>Photo	</th><th>Action	</th><th>Action	</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -38,7 +36,7 @@ layout:decorator="template">
 		<td th:text="${e.dateNaissance}"></td>
 		<td th:text="${e.email}"></td>
 		<td>
-			<img class="img-circle" th:src="@{getPhoto(id=${e.id})}" width="100" height="100"/>
+			<img class="img-thumbnail" th:src="@{getPhoto(id=${e.id})}" width="60" height="60"/>
 		</td>
 		<td><a onclick="return confirm('Etes vous sur de vouloir supprimer:')" th:href="@{/admin/supprimer(id=${e.id})}">Supprimer</a></td>	
 		<td><a  th:href="@{/admin/editer(id=${e.id})}">Editer</a></td>	
@@ -46,7 +44,7 @@ layout:decorator="template">
 	</tbody>
 	</table>
 </div>	
-<div class ="container">
+<div class ="container" >
 	<ul class="nav nav-pills">
 		<li th:each ="p:${pages}" th:class="${p==pageCourante}?active:''"> 
 		<a th:text="${p}" th:href="@{/user/Index(page=${p},motCle=${motCle})}"></a>
@@ -54,5 +52,6 @@ layout:decorator="template">
 	</ul>
 	
 </div>
+
 </body>
 </html>

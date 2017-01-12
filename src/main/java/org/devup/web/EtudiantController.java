@@ -2,16 +2,10 @@ package org.devup.web;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.List;
-
 import javax.validation.Valid;
-
 import org.apache.commons.io.IOUtils;
 import org.devup.dao.EtudiantRepository;
 import org.devup.entities.Etudiant;
-import org.openqa.selenium.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -25,18 +19,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.devup.entities.Pager;
+
 @Controller
 @RequestMapping(value="/")
 public class EtudiantController {
+	
+	// les variables de paramétrage de la barre de pagination
+	private static final int BUTTONS_TO_SHOW = 5;
+	private static final int INITIAL_PAGE = 0;
+	private static final int INITIAL_PAGE_SIZE = 5;
+	private static final int[] PAGE_SIZES = { 5, 10, 20 };
+	
 	@Autowired
 	private EtudiantRepository etudiantRepository;
 	@Value ("${dir.images}")
 	private String imageDir;
-	@RequestMapping(value ="/user/Index")
+	
+	// Appel de la page Index avec la page et le nombre de ligne et le mots clé
+	@RequestMapping(value ="/user/Index",method = RequestMethod.GET)
 	public String  Index(Model model,
-			@RequestParam(name="page", defaultValue="0") int p,
-			@RequestParam(name="motCle",defaultValue="")String mc){
-		Page<Etudiant> pageEtudiants=etudiantRepository.chercherEtudiants("%"+mc+"%",new PageRequest(p, 5));
+			@RequestParam(name="page", defaultValue="0",required = false) Integer p,
+			@RequestParam(name="pageSize",required = false) Integer pageSize,
+			@RequestParam(name="motCle",defaultValue="",required = false) String mc
+			){
+
+		int evalPageSize = pageSize == null ? INITIAL_PAGE_SIZE : pageSize;
+		// Gérer les cas d'exceptions de size ou de page à nul ou à 0 
+		int evalPage = (p == 0 || p < 1) ? INITIAL_PAGE : p - 1;
+		Page<Etudiant> pageEtudiants=etudiantRepository.chercherEtudiants("%"+mc+"%",new PageRequest(evalPage, evalPageSize));
+		//Appel de pager pour calcul des plages à afficher
+		Pager pager = new Pager(pageEtudiants.getTotalPages(), pageEtudiants.getNumber(), BUTTONS_TO_SHOW);
+		
 		int pagesCount=pageEtudiants.getTotalPages();
 		int[] pages=new int[pagesCount];
 		for(int i=0;i<pagesCount;i++) pages[i]=i;
@@ -44,8 +58,17 @@ public class EtudiantController {
 		model.addAttribute("pageEtudiants",pageEtudiants);
 		model.addAttribute("pageCourante",p);
 		model.addAttribute("motCle",mc);
+		model.addAttribute("pagesCount",pagesCount);
+		model.addAttribute("pageSizes", PAGE_SIZES);
+		model.addAttribute("selectedPageSize", evalPageSize);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("pager",pager);
+		
+		System.out.println("-----le nombre evalPageSize "+evalPageSize+"--"+pageSize);
+	
 		return "etudiants";
 	}
+	//Appel du formulaire d'ajout
 	@RequestMapping(value="/admin/form",method=RequestMethod.GET)
 	public String formEtudiant(Model model){
 		model.addAttribute("etudiant",new Etudiant());
@@ -60,17 +83,12 @@ public class EtudiantController {
 			return "formEtudiant";
 		}
 		
-		/*System.out.println("---------Nom photo-------------------");
-		System.out.println(file.getOriginalFilename()); */
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
 		}
 		etudiantRepository.save(et);
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
-			/*System.out.println("----------------------------");
-			System.out.println(et.getPhoto());
-			file.transferTo(new File(imageDir+file.getOriginalFilename())); */
 			file.transferTo(new File(imageDir+et.getId()));
 				
 		}
@@ -83,10 +101,10 @@ public class EtudiantController {
 		File f=new File(imageDir+id);
 		return IOUtils.toByteArray(new FileInputStream(f));
 	}
+	
 	@RequestMapping(value="/admin/supprimer")
 	public String supprimer(Long id){
 		etudiantRepository.delete(id);
-		System.out.println("-----------action supp--------------");
 		return "redirect:/user/Index";
 	}
 	@RequestMapping(value="/admin/editer")
@@ -104,21 +122,14 @@ public class EtudiantController {
 		if (bindingResult.hasErrors()){
 			return "EditEtudiant";
 		}
-		
-		System.out.println("---------Nom photo-------------------");
-		System.out.println(file.getOriginalFilename());
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
 		}
 		etudiantRepository.save(et);
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
-			System.out.println("----------------------------");
-			System.out.println(et.getPhoto());
-			//file.transferTo(new File(imageDir+file.getOriginalFilename()));
 			file.transferTo(new File(imageDir+et.getId()));
-		
-			
+				
 		}
 		
 		return "redirect:/user/Index";
@@ -135,4 +146,9 @@ public class EtudiantController {
 	public String login(){
 		return "login";
 	}
+	@RequestMapping(value="/presentation")
+	public String presentation(){
+		return "presentation";
+	}
+	
 }

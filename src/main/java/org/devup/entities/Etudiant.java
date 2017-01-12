@@ -1,5 +1,4 @@
 package org.devup.entities;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,7 +27,7 @@ public class Etudiant  implements  Serializable {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date dateNaissance;
 	@NotEmpty
-	//@Email
+	//@Email  //vérification format email
 	private String email;
 	private String photo;
 	public Etudiant() {
@@ -72,5 +71,4 @@ public class Etudiant  implements  Serializable {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-
 }

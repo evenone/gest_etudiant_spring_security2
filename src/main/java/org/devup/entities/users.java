@@ -63,6 +63,5 @@ public class users implements Serializable{
 	public void setRoles(Collection<roles> roles) {
 		this.roles = roles;
 	}
-	
  
 }

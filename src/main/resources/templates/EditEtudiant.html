@@ -11,11 +11,11 @@ layout:decorator="template">
 <title>Formulaire de Saisie  des etudiants </title>
 </head>
 
-<body layout:fragment="content">
-<div class=" col-md-6 col-xs-12 col-md-offset-3  spacer">
+<body layout:fragment="content" >
+<div class=" col-md-6 col-xs-12 col-md-offset-3 formulaire" >
 	<div class="panel panel-default">
-		<div class="panel-heading">Saisie Etudiant</div>
-		<div class="panel-body">
+		<div class="panel-heading text-center">Saisie Etudiant</div>
+		<div class="panel-body formulaire">
 		  <form th:action="@{/admin/UpdateEtudiant}" method="post" th:object="${etudiant}" enctype="multipart/form-data">
 		  
 		  <div class="form-group">
@@ -43,15 +43,15 @@ layout:decorator="template">
 		  	<label class="control-label"> photo :</label>
 		  	<input type="file" name ="picture" class ="form-control"/>
 		  	<span class="text-danger" th:errors="*{photo}"></span>
-		  	<img class="img-circle" th:src="@{/user/getPhoto(id=${etudiant.id})}" width="100" height="100"/>
+		  	<img class="img-circle" th:src="@{/user/getPhoto(id=${etudiant.id})}" width="60" height="60"/>
 		  </div>
 		  <div>
-		  <button type="submit" class ="btn btn-primary">Save</button>
+		  <button type="submit" class ="btn btn-primary pull-right">Save</button>
 		  </div>
 		  </form>
 		</div>
 	</div>
-	
+
 </div>
 </body>
 </html>

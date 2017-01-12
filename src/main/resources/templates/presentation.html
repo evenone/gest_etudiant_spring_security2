@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head>
+<meta charset="utf-8"/>
+<link rel="stylesheet"  type="text/css" href ="../static/css/bootstrap.min.css"
+ th:href="@{/css/bootstrap.min.css}" />
+ <link rel="stylesheet"  type="text/css" href ="../static/css/myStyle.css" 
+  th:href="@{/css/myStyle.css}" />
+<title>Présentation </title>
+    <style type="text/css">
+      body { background-color:#DDD; }
+      [class*="col"] { margin-bottom: 20px; }
+      .form-inline { margin-top: 20px}
+      img { width: 100%; }
+      .well {
+        background-color:#CCC;
+        padding: 20px;
+      }
+    </style>
+  </head>
+<body layout:fragment="content">
+    <div class="container">
+      <header class="row">
+        <div class="col-sm-12 col-lg-7">
+          <h1>Exemple d'application java EE Spring Thymleaf Bootstrap</h1>
+        </div>
+        </header>
+      <section class="row">
+        <div class="col-lg-12">
+          <blockquote>
+          <p>Cette exemple montre l'utilisation de <strong> spring MVC, spring security, thymleaf </strong>
+            pour la gestion des étudiants d'un
+            établissement scolaire :
+           </p>
+            <ul>
+            <li>Saisie des étudiants</li>
+            <li>Affichage des listes</li>
+            <li>Recherche dans la liste étudiant</li>
+            </ul>          
+          </blockquote>
+        </div>
+      </section>
+     <div class="row">
+        <section class="col-sm-6">
+          <table class="table table-bordered table-striped table-condensed">
+            <caption>
+            <h2> Les fonctionnalités abordées</h2>
+            </caption>
+            <thead>
+              <tr>
+                <th>Fonctionnalité</th>
+                <th>Outils Utilisés</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>gestion des habilitations </td>
+                <td>Spring security</td>
+              </tr>
+              <tr>
+                <td>Model MVC </td>
+                <td>Spring MVC</td>
+              </tr>
+              <tr>
+                <td>Model de données </td>
+                <td>Spring data et Hibernate</td>
+              </tr>
+              <tr>
+                <td>Couche présentation  </td>
+                <td>Thymleaf et bootstrap</td>
+              </tr>
+              <tr>
+                <td>Module de pagination  </td>
+                <td>jquery</td>               
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <p> Bienvenue dans notre monde !! </p>
+      <section class="row">
+        <div class="col-xs-4 col-sm-3 col-md-2">
+        <img  width="100px" height="100px" src="../static/images/plage1.jpg" th:src="@{/images/plage1.jpg}" alt="image 1 "/>
+        </div>
+         <div class="col-xs-4 col-sm-3 col-md-2">
+        <img  width="100px" height="100px" src="../static/images/plage2.jpg" th:src="@{/images/plage2.jpg}" alt="image 2 "/>
+        </div>
+   
+        <div class="row">
+        <section class="col-sm-8">
+          <form class="well">
+            <legend>Pour m'envoyer un Email</legend>
+            <h4>Comment m'avez-vous trouvé ?</h4>
+            <fieldset>
+
+              <div class="radio">
+                <label for="web" class="radio">
+                  <input type="radio" name="origine" value="web" id="web"/>
+                  Sur le web 
+                </label>
+              </div>
+              <div class="radio">
+                <label for="hasard" class="radio">
+                  <input type="radio" name="origine" value="hasard" id="hasard"/>
+                  Par hasard 
+                </label>
+              </div>
+              <div class="radio">
+                <label for="autre" class="radio">
+                  <input type="radio" name="origine" value="autre" id="autre"/>
+                  Autre... 
+                </label>
+              </div>
+              <label for="textarea">Votre message :</label>
+                <textarea id="textarea" class="form-control" rows="4"></textarea>
+                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-ok-sign"></span> Envoyer</button>
+            </fieldset>
+          </form>
+        </section>
+		
+        <section class="col-sm-4">
+          <address>
+          <strong>Lhoussaine IMOUGAR</strong><br/>
+            Cultivons notre monde Inc<br/>
+            
+          </address>
+        </section>
+      </div>
+      </section>
+</div>  
+ 
+  </body>
+</html>
