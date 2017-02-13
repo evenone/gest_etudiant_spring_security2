@@ -18,7 +18,6 @@ body {
 	background-color:#CCCCCC;
 }
 
-
 }
 a:focus { outline:0; } 
 .pagination-centered {
@@ -32,5 +31,121 @@ a:focus { outline:0; }
 
 .pointer-disabled {
 	pointer-events: none;
+}
+
+body { background-color:#DDD; }
+[class*="col"] { margin-bottom: 20px; }
+.form-inline { margin-top: 20px}
+      
+ .well {
+        background-color:#CCC;
+        padding: 20px;
+      }
+ .red{
+	color :red
+	}
+	
+.box h4{
+	text-align:center;
+	position:relative;
+	top:5px;
+
+}
+.box {
+	width:80%;
+	/*height:200px; */
+	background:#FFF;
+	margin: 10px 10px 10px 10px;
+	border-radius: 10px;
+	border: 1px solid #708D23;
+
+}
+.boxsimple {
+	width:50%;
+	/*height:200px; */
+	background:#FFF;
+	border-radius: 10px;
+	border: 1px solid #708D23;
+	box-shadow: 5px 5px 0px 0px green;
+	margin-top:5px;
+
+}
+.boxsimple h4{
+	text-align:center;
+	position:relative;
+	top:5px;
+
+}
+
+/*==================================================
+ * Effect 8
+ * ===============================================*/
+.effect8
+{
+    position:relative;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effect8:before, .effect8:after
+{
+	content:"";
+    position:absolute; 
+    z-index:-1;
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:10px;
+    bottom:10px;
+    left:0;
+    right:0;
+    border-radius:100px / 10px;
+} 
+.effect8:after
+{
+    right:10px; 
+    left:auto; 
+    transform:skew(8deg) rotate(3deg);
+}
+
+.boxshadow {
+    box-shadow: 5px 5px 0px 0px green;margin-top:5px;
+	
+}
+.boxshadow2 {
+    box-shadow: 15px 5px 0px 0px grey;
+	
+}
+
+.contenu-non-mobile {
+	/* à detailler  */
+}
+
+
+
+@media screen and (min-width: 441) {
+/*à détailler */
+	
+}
+@media screen and (min-width: 300px) and (max-width: 440px) {
+	
+ .container{
+  	width :100%;
+    margin-right:0px;
+    padding-right:0px;
+  }
+#pres p{
+	font-size: 120%;
+	
+  }
+  .box{
+	width:100%;
+	 
+  }
+  .boxsimple{
+  	width:100%
+  } 
+  .contenu-non-mobile { display: none; }   /* hide it elsewhere */
+  .box { width: 100%; }    
+  .boxsimple { width:100%; } 
+  #daten{display:none;}  
+  #email{display:none;}
+  
 }
 

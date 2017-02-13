@@ -12,8 +12,9 @@ layout:decorator="template">
 </head>
 
 <body layout:fragment="content" >
+<div class="container" >
 <div class=" col-md-6 col-xs-12 col-md-offset-3  formulaire" >
-	<div class="panel panel-default">
+		<div class="panel panel-default">
 		<div class="panel-heading text-center">Saisie Etudiant</div>
 		<div class="panel-body formulaire" >
 		  <form th:action="@{/admin/saveEtudiant}" method="post" th:object="${etudiant}" enctype="multipart/form-data">
@@ -45,6 +46,6 @@ layout:decorator="template">
 	</div>
 	
 </div>
-
+</div>
 </body>
 </html>

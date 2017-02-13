@@ -36,6 +36,11 @@ public class EtudiantController {
 	@Value ("${dir.images}")
 	private String imageDir;
 	
+	@RequestMapping(value ="/",method = RequestMethod.GET)
+	public String  pres(){
+		return "presentation";
+	}
+	
 	// Appel de la page Index avec la page et le nombre de ligne et le mots clé
 	@RequestMapping(value ="/user/Index",method = RequestMethod.GET)
 	public String  Index(Model model,
