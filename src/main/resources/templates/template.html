@@ -5,7 +5,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width" />
-<title>Scolarité </title>
+<title>Cultivons Notre Monde </title>
 <link rel="stylesheet"  type="text/css" href ="../static/css/bootstrap.min.css"
  th:href="@{/css/bootstrap.min.css}" />
  <link rel="stylesheet"  type="text/css" href ="../static/css/myStyle.css" 
@@ -19,13 +19,13 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 			<ul class="nav navbar-nav">
 				<li><a th:href="@{/presentation}">Home </a></li>
 				<li class="active"> <a href="#" th:href="@{/user/Index}">Liste Etudiants</a></li>
-				<li> <a href="#" th:href="@{/admin/form}">Saisie Etudiant</a></li>
+				<li> <a href="#" th:href="@{/admin/form}">Inscription</a></li>
 			</ul>
           <form class="navbar-form navbar-right inline-form">
             <div class="form-group">
               <input type="text" class="input-sm form-control"  placeholder="Recherche"/>
               <button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Rechercher sur le site</button>
-              <a href="#" th:href="@{/login?logout}" th:inline="text" style="color:black">aaa 
+              <a href="#" th:href="@{/login?logout}" th:inline="text" style="color:black">--- 
               <span class="glyphicon glyphicon glyphicon-user " style="color:white;  font-weight: bold;"> Logout-[[${#httpServletRequest.remoteUser}]]
 				</span> 
 			   </a>

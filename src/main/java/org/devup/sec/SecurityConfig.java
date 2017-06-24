@@ -1,6 +1,6 @@
 package org.devup.sec;
 
-/* Module de configuration securité */
+/* Module de configuration securité spring*/
 
 import javax.sql.DataSource;
 

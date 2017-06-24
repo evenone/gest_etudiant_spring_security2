@@ -1,11 +1,22 @@
 package org.devup.web;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
+
 import org.apache.commons.io.IOUtils;
 import org.devup.dao.EtudiantRepository;
 import org.devup.entities.Etudiant;
+import org.devup.entities.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -19,17 +30,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.devup.entities.Pager;
 
 @Controller
 @RequestMapping(value="/")
 public class EtudiantController {
 	
 	// les variables de paramétrage de la barre de pagination
-	private static final int BUTTONS_TO_SHOW = 5;
-	private static final int INITIAL_PAGE = 0;
-	private static final int INITIAL_PAGE_SIZE = 5;
-	private static final int[] PAGE_SIZES = { 5, 10, 20 };
+	private static final int 	BUTTONS_TO_SHOW = 5;
+	private static final int 	INITIAL_PAGE = 0;
+	private static final int 	INITIAL_PAGE_SIZE = 5;
+	private static final int[] 	PAGE_SIZES = { 5, 10, 20 };
+	private static final int 	IMG_SIZE_ETUDIANT = 100;
+	private static final String IMG_FORMAT_ETUDIANT ="jpg";
+	
 	
 	@Autowired
 	private EtudiantRepository etudiantRepository;
@@ -79,6 +92,7 @@ public class EtudiantController {
 		model.addAttribute("etudiant",new Etudiant());
 		return "formEtudiant";
 	}
+
 	@RequestMapping(value="/admin/saveEtudiant",method=RequestMethod.POST)
 	public String save(@Valid Etudiant et,
 			BindingResult bindingResult,
@@ -93,17 +107,21 @@ public class EtudiantController {
 		}
 		etudiantRepository.save(et);
 		if (!(file.isEmpty())){
-			et.setPhoto(file.getOriginalFilename());
-			file.transferTo(new File(imageDir+et.getId()));
-				
+			String ImageNameExt=file.getOriginalFilename();
+			et.setPhoto(ImageNameExt);
+			 
+			// file.transferTo(new File(imageDir+et.getId()));  //sauver sans reduction
+			//String ImageFormat=ImageNameExt.substring(ImageNameExt.indexOf('.')+1,ImageNameExt.length());
+			scaleSaveMultipartImage(file, Long.toString(et.getId()), IMG_SIZE_ETUDIANT); 
 		}
 		
+	
 		return "redirect:/user/Index";
 	}
 	@RequestMapping(value="/user/getPhoto",produces=MediaType.IMAGE_JPEG_VALUE)
 	@ResponseBody 	//envoie des donnée dans le corps de la req
 	public byte[] getPhoto(Long id) throws Exception  {
-		File f=new File(imageDir+id);
+		File f=new File(imageDir+id+".jpg");
 		return IOUtils.toByteArray(new FileInputStream(f));
 	}
 	
@@ -133,7 +151,8 @@ public class EtudiantController {
 		etudiantRepository.save(et);
 		if (!(file.isEmpty())){
 			et.setPhoto(file.getOriginalFilename());
-			file.transferTo(new File(imageDir+et.getId()));
+			//file.transferTo(new File(imageDir+et.getId())); sauvegarde sans compression
+			scaleSaveMultipartImage(file, Long.toString(et.getId()), IMG_SIZE_ETUDIANT);
 				
 		}
 		
@@ -156,4 +175,42 @@ public class EtudiantController {
 		return "presentation";
 	}
 	
+	
+	private void  scaleSaveMultipartImage(MultipartFile file, String ImageName, int size) throws IOException {
+		
+		byte [] imageByteArray = file.getBytes();
+		InputStream inStream = new ByteArrayInputStream(imageByteArray);
+		BufferedImage bufferedImage = ImageIO.read(inStream);
+		BufferedImage img_scale= scaleBufferedImage( bufferedImage, size) ;
+    	ImageName=imageDir+ImageName+"."+ IMG_FORMAT_ETUDIANT;  //save images with name=id_etudiant.jpg
+		ImageIO.write(img_scale, IMG_FORMAT_ETUDIANT, new File(ImageName));
+		inStream.close();	
+	}
+	private BufferedImage scaleBufferedImage(BufferedImage bufferedImage, int size) {
+	    double boundSize = size;
+	       int origWidth = bufferedImage.getWidth();
+	       int origHeight = bufferedImage.getHeight();
+	       double scale;
+	       if (origHeight > origWidth)
+	           scale = boundSize / origHeight;
+	       else
+	           scale = boundSize / origWidth;
+	        //* Don't scale up small images.
+	       if (scale > 1.0)
+	           return (bufferedImage);
+	       int scaledWidth = (int) (scale * origWidth);
+	       int scaledHeight = (int) (scale * origHeight);
+	       Image scaledImage = bufferedImage.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
+	       // new ImageIcon(image); // load image
+	       // scaledWidth = scaledImage.getWidth(null);
+	       // scaledHeight = scaledImage.getHeight(null);
+	       BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, BufferedImage.TYPE_INT_RGB);
+	       Graphics2D g = scaledBI.createGraphics();
+	       g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	       g.drawImage(scaledImage, 0, 0, null);
+	       g.dispose();
+	       return (scaledBI);
+	}
+
+
 }

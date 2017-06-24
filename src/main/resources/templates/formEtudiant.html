@@ -8,14 +8,14 @@ layout:decorator="template">
  th:href="@{/css/bootstrap.min.css}" />
  <link rel="stylesheet"  type="text/css" href ="../static/css/myStyle.css" 
   th:href="@{/css/myStyle.css}" />
-<title>Formulaire de Saisie  des etudiants </title>
+<title> Inscription </title>
 </head>
 
 <body layout:fragment="content" >
 <div class="container" >
 <div class=" col-md-6 col-xs-12 col-md-offset-3  formulaire" >
 		<div class="panel panel-default">
-		<div class="panel-heading text-center">Saisie Etudiant</div>
+		<div class="panel-heading text-center">Enregistrement Etudiant</div>
 		<div class="panel-body formulaire" >
 		  <form th:action="@{/admin/saveEtudiant}" method="post" th:object="${etudiant}" enctype="multipart/form-data">
 		  <div class="form-group">
