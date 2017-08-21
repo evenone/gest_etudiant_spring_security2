@@ -1,3 +1,9 @@
+/***************************************
+ * Auteur : Lhoussaine IMOUGAR
+ * Date   : 01/04/2017
+ * Module :
+ **************************************/
+
 package org.devup;
 
 import java.text.DateFormat;
@@ -20,11 +26,12 @@ public class TpSpringMvcApplication {
 		
 		ApplicationContext ctx= SpringApplication.run(TpSpringMvcApplication.class, args);
 		EtudiantRepository etudiantRepository =ctx.getBean(EtudiantRepository.class);
-		/*Inserer un jeu d'essai dans la base et tester la maj
+		
+		/*Partie test de MAJ de la BD
 		DateFormat df =new SimpleDateFormat("yyyy-MM-dd");
-		etudiantRepository.save(new Etudiant("Ahmed",df.parse("1980-11-10"), "Ahmed.gmail.com","Ahmed.jpg"));
-		etudiantRepository.save(new Etudiant("Mohamed",df.parse("1980-11-10"), "Mohamed.gmail.com","Mohamed.jpg"));
-		etudiantRepository.save(new Etudiant("Ibrahim",df.parse("1980-11-10"), "Inrahim.gmail.com","Ibrahim.jpg"));
+		etudiantRepository.save(new Etudiant("Alain",df.parse("1980-11-10"), "alain.gmail.com","alain.jpg"));
+		etudiantRepository.save(new Etudiant("Eric",df.parse("1980-11-10"), "eric.gmail.com","eric.jpg"));
+		etudiantRepository.save(new Etudiant("Bernard",df.parse("1980-11-10"), "bernard.gmail.com","bernard.jpg"));
 		System.out.println("--------------------------------------------------------------------------------- ");
 		System.out.println("Liste des etudiants...... ");
 		System.out.println("--------------------------------------------------------------------------------- ");

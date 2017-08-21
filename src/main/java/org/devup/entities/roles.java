@@ -1,3 +1,8 @@
+/***************************************
+ * Auteur : Lhoussaine IMOUGAR
+ * Date   : 01/04/2017
+ * Module :	Entité Role
+ **************************************/
 package org.devup.entities;
 
 import java.io.Serializable;

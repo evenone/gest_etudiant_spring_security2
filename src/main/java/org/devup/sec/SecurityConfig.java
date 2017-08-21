@@ -1,7 +1,10 @@
+/***************************************
+ * Auteur : Lhoussaine IMOUGAR
+ * Date   : 01/04/2017
+ * Module :	Configuration des Options de sécurité
+ **************************************/
+
 package org.devup.sec;
-
-/* Module de configuration securité spring*/
-
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +19,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private DataSource dataSource;
-	//configuration avec objet AuthenticationManagerBuilder
 	
+	//configuration avec objet AuthenticationManagerBuilder
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		

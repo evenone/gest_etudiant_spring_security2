@@ -1,3 +1,9 @@
+/***************************************
+ * Auteur : Lhoussaine IMOUGAR
+ * Date   : 01/04/2017
+ * Module :	Entité Etudiant
+ **************************************/
+
 package org.devup.entities;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,21 +19,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Etudiant  implements  Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private Long id;
 	@Column (name="NOM",length=30)
 	@NotEmpty
-	@Size(min=5,max=30,message="taille incorect") //mais y a un autre maniere  internat des msg
+	@Size(min=5,max=30,message="Taille du nom incorrect") // Autre manière, voir internationalisation des msgs
 	private String nom;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date dateNaissance;
 	@NotEmpty
-	//@Email  //vérification format email
+	//@Email  //vérification du format email
 	private String email;
 	private String photo;
 	public Etudiant() {

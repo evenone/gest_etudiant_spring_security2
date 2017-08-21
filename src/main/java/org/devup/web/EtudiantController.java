@@ -1,3 +1,8 @@
+/***************************************
+ * Auteur : Lhoussaine IMOUGAR
+ * Date   : 01/04/2017
+ * Module :
+ **************************************/
 package org.devup.web;
 
 import java.awt.Graphics2D;
@@ -46,15 +51,16 @@ public class EtudiantController {
 	
 	@Autowired
 	private EtudiantRepository etudiantRepository;
-	@Value ("${dir.images}")
+	@Value ("${dir.images}")  //Répertoire de stockage des images Attention il faut le créer avant de tester
 	private String imageDir;
 	
 	@RequestMapping(value ="/",method = RequestMethod.GET)
+	//Page de présentation 
 	public String  pres(){
 		return "presentation";
 	}
 	
-	// Appel de la page Index avec la page et le nombre de ligne et le mots clé
+	// Appel de la page Index avec le numéro de page et le nombre de ligne et le mots clé
 	@RequestMapping(value ="/user/Index",method = RequestMethod.GET)
 	public String  Index(Model model,
 			@RequestParam(name="page", defaultValue="0",required = false) Integer p,
@@ -82,7 +88,7 @@ public class EtudiantController {
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pager",pager);
 		
-		System.out.println("-----le nombre evalPageSize "+evalPageSize+"--"+pageSize);
+		//System.out.println("-----le nombre evalPageSize "+evalPageSize+"--"+pageSize);
 	
 		return "etudiants";
 	}
@@ -142,6 +148,7 @@ public class EtudiantController {
 			BindingResult bindingResult,
 			@RequestParam(name="picture") MultipartFile file
 			) throws Exception {
+		
 		if (bindingResult.hasErrors()){
 			return "EditEtudiant";
 		}
@@ -175,7 +182,7 @@ public class EtudiantController {
 		return "presentation";
 	}
 	
-	
+//Réduction des images pour optimisation d'affichage	
 	private void  scaleSaveMultipartImage(MultipartFile file, String ImageName, int size) throws IOException {
 		
 		byte [] imageByteArray = file.getBytes();
@@ -211,6 +218,5 @@ public class EtudiantController {
 	       g.dispose();
 	       return (scaledBI);
 	}
-
 
 }
